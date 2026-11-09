@@ -389,9 +389,9 @@
 
   /* ---------- Toast ---------- */
   let toastT;
-  function toast(msg) {
+  function toast(msg, ms = 2000) {
     const t = $('#toast'); t.textContent = msg; t.style.opacity = 1;
-    clearTimeout(toastT); toastT = setTimeout(() => t.style.opacity = 0, 2000);
+    clearTimeout(toastT); toastT = setTimeout(() => t.style.opacity = 0, ms);
   }
   async function copyEmail() {
     try { await navigator.clipboard.writeText(D.profile.email); toast('Email copied to clipboard'); }
@@ -464,6 +464,15 @@
       return ok;
     };
     Object.keys(rules).forEach(id => $('#' + id).addEventListener('blur', () => check(id)));
+
+    // Without Formspree the form can't send by itself: say so up front
+    if (!D.contact.formspreeId) {
+      $('#form-submit').textContent = 'Open in my email app →';
+      const note = $('#form-note');
+      note.innerHTML = `This opens your email app with your message ready. It is only sent after you press <strong class="text-fg">Send</strong> there.
+        No email app? Write to <a href="mailto:${esc(D.profile.email)}" class="underline hover:text-fg">${esc(D.profile.email)}</a>.`;
+      note.classList.remove('hidden');
+    }
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const ok = Object.keys(rules).map(check).every(Boolean);
@@ -480,6 +489,7 @@
         } catch { toast('Could not send. Please email me directly.'); }
       } else {
         const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+        toast('Opening your email app. Press Send there to deliver your message.', 7000);
         location.href = `mailto:${D.profile.email}?subject=${encodeURIComponent('Portfolio enquiry from ' + name)}&body=${body}`;
       }
     });

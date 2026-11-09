@@ -43,7 +43,7 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="css/custom.css?v=4" />
+  <link rel="stylesheet" href="css/custom.css?v=5" />
 </head>
 
 <body class="bg-bg text-fg font-sans antialiased selection:bg-fg selection:text-bg">
@@ -242,7 +242,8 @@
               <textarea id="f-msg" name="message" rows="5" required class="field resize-none" placeholder="Tell me about your project…"></textarea>
               <p class="err" data-for="f-msg">Message should be at least 10 characters.</p>
             </div>
-            <button type="submit" class="magnetic w-full sm:w-auto bg-fg text-bg px-8 py-4 font-mono text-xs uppercase tracking-widest">Send message →</button>
+            <button id="form-submit" type="submit" class="magnetic w-full sm:w-auto bg-fg text-bg px-8 py-4 font-mono text-xs uppercase tracking-widest">Send message →</button>
+            <p id="form-note" class="hidden font-mono text-xs text-dim leading-relaxed border-l border-line pl-3"></p>
           </form>
         </div>
       </div>
@@ -279,7 +280,7 @@
   <!-- Toast -->
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[90] bg-fg text-bg font-mono text-xs px-4 py-2 opacity-0 pointer-events-none transition-opacity"></div>
 
-  <script src="js/data.js?v=4"></script>
-  <script src="js/main.js?v=4"></script>
+  <script src="js/data.js?v=5"></script>
+  <script src="js/main.js?v=5"></script>
 </body>
 </html>
