@@ -10,6 +10,20 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const pad = (n, l = 2) => String(n).padStart(l, '0');
 
+  // Load images with a freshness check, so a replaced photo (same file name)
+  // shows right away instead of the browser's saved copy. Unchanged files
+  // aren't downloaded again: the server just answers "not modified".
+  function loadImages(root = document) {
+    $$('img[data-src]', root).forEach(img => {
+      const url = img.dataset.src;
+      img.removeAttribute('data-src');
+      fetch(url, { cache: 'no-cache' })
+        .then(r => { if (!r.ok) throw new Error(r.status); return r.blob(); })
+        .then(b => { img.src = URL.createObjectURL(b); })
+        .catch(() => { img.src = url; });   // e.g. opened as a local file
+    });
+  }
+
   const SECTIONS = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
@@ -66,8 +80,9 @@
   function renderAbout() {
     const p = D.profile;
     $('#about-photo').innerHTML = p.photo
-      ? `<img src="${esc(p.photo)}" alt="Portrait of ${esc(p.name)}" class="w-full h-full object-cover grayscale" style="object-position: ${esc(p.photoPosition || 'center')}" />`
+      ? `<img data-src="${esc(p.photo)}" alt="Portrait of ${esc(p.name)}" class="w-full h-full object-cover grayscale" style="object-position: ${esc(p.photoPosition || 'center')}" />`
       : `<div class="thumb w-full h-full flex items-center justify-center"><span class="font-mono text-5xl font-medium bg-bg px-3">${esc(p.shortName)}</span></div>`;
+    loadImages($('#about-photo'));
     $('#about-bio').innerHTML = p.bio.map(b => `<p>${esc(b)}</p>`).join('');
     $('#about-stats').innerHTML = p.stats.map(s => `
       <div class="bg-bg p-6 reveal">
@@ -126,7 +141,7 @@
       return `
       <article class="card border border-line bg-bg cursor-pointer reveal ${big ? 'md:col-span-2 lg:row-span-1' : ''}" data-project="${p.i}" tabindex="0" role="button" aria-label="Open ${esc(p.title)} details">
         <div class="thumb ${big ? 'aspect-[16/7]' : 'aspect-[16/10]'} border-b border-line relative overflow-hidden">
-          ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)} screenshot" class="w-full h-full object-cover grayscale hover:grayscale-0 transition" loading="lazy" />`
+          ${p.image ? `<img data-src="${esc(p.image)}" alt="${esc(p.title)} screenshot" class="w-full h-full object-cover grayscale hover:grayscale-0 transition" loading="lazy" />`
                     : `<div class="absolute inset-0 flex items-center justify-center"><span class="bg-bg px-3 py-1 font-mono text-xs uppercase tracking-widest">${esc(p.title)}</span></div>`}
           <span class="absolute top-3 left-3 bg-bg border border-line font-mono text-[10px] px-2 py-1">${pad(n + 1)} / ${esc(p.category)}</span>
           ${big ? '<span class="absolute top-3 right-3 bg-fg text-bg font-mono text-[10px] px-2 py-1 uppercase tracking-widest">Featured</span>' : ''}
@@ -142,7 +157,7 @@
       </article>`;
     }).join('') || `<p class="font-mono text-sm text-dim">No projects in this category yet.</p>`;
 
-    observeReveal($('#projects-grid'));
+    observeReveal($('#projects-grid')); loadImages($('#projects-grid'));
     bindTilt();
     bindCursorTargets();
   }
@@ -404,7 +419,7 @@
     const p = D.projects[i]; lastFocus = document.activeElement;
     $('#modal-body').innerHTML = `
       <div class="thumb aspect-[16/8] border-b border-line flex items-center justify-center overflow-hidden">
-        ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)} screenshot" class="w-full h-full object-cover" />` : `<span class="bg-bg px-3 py-1 font-mono text-xs uppercase tracking-widest">${esc(p.title)}</span>`}
+        ${p.image ? `<img data-src="${esc(p.image)}" alt="${esc(p.title)} screenshot" class="w-full h-full object-cover" />` : `<span class="bg-bg px-3 py-1 font-mono text-xs uppercase tracking-widest">${esc(p.title)}</span>`}
       </div>
       <div class="p-6 md:p-8">
         <div class="font-mono text-xs text-dim">${esc(p.category)} · ${esc(p.year)}</div>
@@ -417,7 +432,7 @@
           ${p.private && !p.github ? `<span class="border border-dashed border-line px-5 py-3 font-mono text-xs uppercase tracking-widest text-dim">Private repository</span>` : ''}
         </div>
       </div>`;
-    showLayer($('#modal'));
+    showLayer($('#modal')); loadImages($('#modal'));
     $('#modal [data-close].absolute.top-3, #modal button[data-close]')?.focus();
     bindCursorTargets();
   }
