@@ -16,7 +16,7 @@ const PORTFOLIO = {
     location: "Chitwan, Nepal",
     timezone: "Asia/Kathmandu",            // used by the live clock in the navbar
     email: "emondev9997000@gmail.com",
-    photo: "",                             // e.g. "assets/me.jpg" — leave empty for a placeholder
+    photo: "assets/me.jpg",                // leave empty for a placeholder
     resume: "",                            // e.g. "assets/resume.pdf" — empty hides the Download CV button
     availability: "Open to internships in Nepal",   // empty hides the badge
     stats: [                               // suffix is optional, e.g. "+"
