@@ -66,7 +66,7 @@
   function renderAbout() {
     const p = D.profile;
     $('#about-photo').innerHTML = p.photo
-      ? `<img src="${esc(p.photo)}" alt="Portrait of ${esc(p.name)}" class="w-full h-full object-cover grayscale" />`
+      ? `<img src="${esc(p.photo)}" alt="Portrait of ${esc(p.name)}" class="w-full h-full object-cover grayscale" style="object-position: ${esc(p.photoPosition || 'center')}" />`
       : `<div class="thumb w-full h-full flex items-center justify-center"><span class="font-mono text-5xl font-medium bg-bg px-3">${esc(p.shortName)}</span></div>`;
     $('#about-bio').innerHTML = p.bio.map(b => `<p>${esc(b)}</p>`).join('');
     $('#about-stats').innerHTML = p.stats.map(s => `
