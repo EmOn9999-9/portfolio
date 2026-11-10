@@ -86,7 +86,7 @@ const PORTFOLIO = {
     // "grade" is optional
     { title: "Bachelor in CSIT (6th semester)", place: "Lumbini ICT Campus, Gaindakot, Nawalpur", period: "2080 BS — Present" },
     { title: "+2 in Computer Science (SLC)", place: "Ankuram Academy", grade: "GPA 3.23", period: "2080 BS" },
-    { title: "SEE", place: "Secondary Education Examination", grade: "GPA 3.95", period: "2078 BS" }
+    { title: "Secondary Education (SEE)", place: "Ekata Shishu Niketan", grade: "GPA 3.95", period: "2078 BS" }
   ],
 
   github: {
