@@ -107,3 +107,6 @@ body.loading { overflow: hidden; }
   .reveal { opacity: 1; transform: none; }
   .cursor-dot, .cursor-ring { display: none !important; }
 }
+
+/* Contact links: an odd last link fills the whole row instead of leaving a gap */
+#contact-socials > a:last-child:nth-child(odd) { grid-column: span 2; }

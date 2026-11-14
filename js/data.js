@@ -30,6 +30,7 @@ const PORTFOLIO = {
 
   socials: [
     { name: "GitHub",    url: "https://github.com/EmOn9999-9" },
+    { name: "Docker Hub", url: "https://hub.docker.com/u/emondevkota" },
     { name: "Instagram", url: "https://www.instagram.com/e_devkota/" },
     { name: "X",         url: "https://x.com/Emonn2418" },
     { name: "Email",     url: "mailto:emondev9997000@gmail.com" }
@@ -48,12 +49,12 @@ const PORTFOLIO = {
       { name: "Flutter" }, { name: "Dart" }, { name: "Serverpod" }, { name: "PostgreSQL" }
     ]},
     { group: "Tools", items: [
-      { name: "Git" }, { name: "GitHub" }, { name: "GitHub Actions" }, { name: "Firebase" }
+      { name: "Git" }, { name: "GitHub" }, { name: "GitHub Actions" }, { name: "Docker" }, { name: "Firebase" }
     ]}
   ],
 
   // Scrolling ticker of technologies
-  marquee: ["Flutter", "Dart", "Laravel", "PHP", "Serverpod", "PostgreSQL", "JavaScript", "HTML", "CSS", "C", "C++", "Firebase", "Git"],
+  marquee: ["Flutter", "Dart", "Laravel", "PHP", "Serverpod", "PostgreSQL", "JavaScript", "HTML", "CSS", "C", "C++", "Docker", "Firebase", "Git"],
 
   services: [
     { title: "Web Applications", desc: "Full-stack web apps with Laravel and PHP, from database design to working pages." },
